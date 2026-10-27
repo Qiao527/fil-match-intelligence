@@ -20,5 +20,9 @@ jobs:
       - run: uv run --frozen ruff check .
       - run: node --check public/app.js
       - run: uv run --frozen pytest -q
-      - run: uv run --frozen python -m playwright install --with-deps chromium
+      # ubuntu-24.04 already supplies Chromium's shared libraries. Installing
+      # extra font packs via apt stalled the prior run for its entire 10-minute
+      # budget. Install the pinned browser; launch/acceptance still fail on any
+      # missing runtime dependency rather than skipping browser checks.
+      - run: uv run --frozen python -m playwright install chromium
       - run: uv run --frozen python tests/browser_check.py

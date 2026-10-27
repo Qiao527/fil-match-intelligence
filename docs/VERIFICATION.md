@@ -40,6 +40,13 @@ hashes as well as checking health, catalog and the user journey. The same checke
 against the production URL once network access is permitted; local results are not represented
 as production results.
 
+Run `40538219580` passed lint and 14 tests but reached the ten-minute job timeout while
+Ubuntu's Azure mirror downloaded optional font packages during `playwright install --with-deps`.
+The browser journey did not run; that run is not a pass. The Ubuntu 24.04 runner already had
+the browser's required shared libraries, as its installation log records. CI now installs the
+pinned Playwright Chromium without repeating apt font installation. The complete browser
+journey remains required and will fail if a necessary runtime library is absent.
+
 ## Scientific and measurement limits
 
 No human usefulness evaluation, independent football confirmation, ratings, model fitting or
