@@ -9,3 +9,10 @@
 
 Explain that independent football usefulness is untested. The public application's goal is to
 make calculations and limitations inspectable; it does not establish expert-level discovery.
+
+## Pitch-first demonstration
+
+Start with a shot location, open its original JSON, then select a review sequence and step through
+the recorded passes. Show team/period filtering and the same-scale comparison. Finish by opening
+a card's counterevidence and the baseline ledger. These are fictional source-record observations,
+not validated tactical discoveries. See SPATIAL-WORKSPACE.md for exact steps and limits.

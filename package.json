@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "node --check public/app.js"
+    "build": "node --check public/app.js && node --check public/spatial.js",
+    "test": "node --test tests/spatial.test.cjs"
   }
 }

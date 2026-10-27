@@ -85,3 +85,12 @@ This falsified any inference that a READY deployment meant the full product work
 static/function build declarations and three API rewrites were added, with rewritten-path
 regression coverage and a browser catalog-failure-state check. Local tests cannot certify
 production routing; anonymous production acceptance must still be recorded separately.
+
+## Spatial workspace revision
+
+The owner confirmed that production lists all three fictional fixtures and generates reports
+before this revision. The pitch-first UI adds native-coordinate plots and action selection.
+Sixteen Python tests, three Node geometry tests and an extended Chromium journey pass locally.
+The original engine hashes remain unchanged. Screenshot captures and two sets of ten interleaved
+paired measurements are retained; results and limitations are in SPATIAL-WORKSPACE.md.
+This revision's hosted CI/build state must be checked separately from production browser acceptance.

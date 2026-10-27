@@ -1,0 +1,162 @@
+{
+  "parent_commit": "26a91dbc7db74c16ecd335d7f5faf6ca8566b92b",
+  "methodology": "Interleaved local browser comparison; not a production/server cold-start benchmark.",
+  "repetitions": 10,
+  "browser": "Chromium, fresh context per sample, one shared process",
+  "fixture": "demo-1, full match, both teams",
+  "samples": [
+    {
+      "pair": 0,
+      "variant": "parent",
+      "page_ready_ms": 303.59999999962747,
+      "analysis_dom_ms": 46.100000001490116
+    },
+    {
+      "pair": 0,
+      "variant": "candidate",
+      "page_ready_ms": 249,
+      "analysis_dom_ms": 24.800000000745058
+    },
+    {
+      "pair": 1,
+      "variant": "candidate",
+      "page_ready_ms": 228.10000000149012,
+      "analysis_dom_ms": 29.299999998882413
+    },
+    {
+      "pair": 1,
+      "variant": "parent",
+      "page_ready_ms": 167.60000000149012,
+      "analysis_dom_ms": 99
+    },
+    {
+      "pair": 2,
+      "variant": "parent",
+      "page_ready_ms": 266.80000000074506,
+      "analysis_dom_ms": 19
+    },
+    {
+      "pair": 2,
+      "variant": "candidate",
+      "page_ready_ms": 293.19999999925494,
+      "analysis_dom_ms": 57.90000000037253
+    },
+    {
+      "pair": 3,
+      "variant": "candidate",
+      "page_ready_ms": 282.40000000037253,
+      "analysis_dom_ms": 51.40000000037253
+    },
+    {
+      "pair": 3,
+      "variant": "parent",
+      "page_ready_ms": 225.59999999962747,
+      "analysis_dom_ms": 30
+    },
+    {
+      "pair": 4,
+      "variant": "parent",
+      "page_ready_ms": 302,
+      "analysis_dom_ms": 51.09999999962747
+    },
+    {
+      "pair": 4,
+      "variant": "candidate",
+      "page_ready_ms": 216,
+      "analysis_dom_ms": 21.799999998882413
+    },
+    {
+      "pair": 5,
+      "variant": "candidate",
+      "page_ready_ms": 168.19999999925494,
+      "analysis_dom_ms": 26.40000000037253
+    },
+    {
+      "pair": 5,
+      "variant": "parent",
+      "page_ready_ms": 264.1000000014901,
+      "analysis_dom_ms": 24.90000000037253
+    },
+    {
+      "pair": 6,
+      "variant": "parent",
+      "page_ready_ms": 239.80000000074506,
+      "analysis_dom_ms": 45.90000000037253
+    },
+    {
+      "pair": 6,
+      "variant": "candidate",
+      "page_ready_ms": 256.09999999962747,
+      "analysis_dom_ms": 34
+    },
+    {
+      "pair": 7,
+      "variant": "candidate",
+      "page_ready_ms": 246.19999999925494,
+      "analysis_dom_ms": 49.59999999962747
+    },
+    {
+      "pair": 7,
+      "variant": "parent",
+      "page_ready_ms": 221.39999999850988,
+      "analysis_dom_ms": 22.200000001117587
+    },
+    {
+      "pair": 8,
+      "variant": "parent",
+      "page_ready_ms": 243.80000000074506,
+      "analysis_dom_ms": 43.09999999962747
+    },
+    {
+      "pair": 8,
+      "variant": "candidate",
+      "page_ready_ms": 300.09999999962747,
+      "analysis_dom_ms": 31.799999998882413
+    },
+    {
+      "pair": 9,
+      "variant": "candidate",
+      "page_ready_ms": 265.19999999925494,
+      "analysis_dom_ms": 43.70000000111759
+    },
+    {
+      "pair": 9,
+      "variant": "parent",
+      "page_ready_ms": 193.19999999925494,
+      "analysis_dom_ms": 46.399999998509884
+    }
+  ],
+  "summary": {
+    "parent": {
+      "page_ready_ms": {
+        "median": 241.80000000074506,
+        "minimum": 167.60000000149012,
+        "maximum": 303.59999999962747,
+        "stdev": 43.601693392162595
+      },
+      "analysis_dom_ms": {
+        "median": 44.5,
+        "minimum": 19,
+        "maximum": 99,
+        "stdev": 22.939342720254636
+      },
+      "asset_bytes": 16611
+    },
+    "candidate": {
+      "page_ready_ms": {
+        "median": 252.54999999981374,
+        "minimum": 168.19999999925494,
+        "maximum": 300.09999999962747,
+        "stdev": 39.48913352635297
+      },
+      "analysis_dom_ms": {
+        "median": 32.89999999944121,
+        "minimum": 21.799999998882413,
+        "maximum": 57.90000000037253,
+        "stdev": 12.628631491217462
+      },
+      "asset_bytes": 34149
+    }
+  },
+  "limits": "Local loopback, small fictional fixtures; not production latency, physical timing, or usefulness evidence."
+}

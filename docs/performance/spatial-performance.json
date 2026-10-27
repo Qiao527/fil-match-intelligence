@@ -1,0 +1,169 @@
+{
+  "parent_commit": "26a91dbc7db74c16ecd335d7f5faf6ca8566b92b",
+  "candidate_asset_sha256": {
+    "spatial.js": "8412f412b2b5609a6e476d7ecb20ab43432b4f34f828b232cf526707dfacc386",
+    "app.js": "ba3b9560c1ad7edeea21db7d16360352784f8fff65c1343dfc00afa9ec911528",
+    "style.css": "d9fcb4f48fd085b67b83467027a89a8be771b054c115bf93c5e803ba12c804d6",
+    "favicon.svg": "234b96d2c54ed6791ebaf24969b700781db646b5d1d49d0186144a50191e806d",
+    "index.html": "717c3f3aa8252b65a20e2c330cc27b495f62cb5cd8aee32d604b5cab2b02c0d1"
+  },
+  "methodology": "Interleaved local browser comparison; not a production/server cold-start benchmark.",
+  "repetitions": 10,
+  "browser": "Chromium, fresh context per sample, one shared process",
+  "fixture": "demo-1, full match, both teams",
+  "samples": [
+    {
+      "pair": 0,
+      "variant": "parent",
+      "page_ready_ms": 389.2000000011176,
+      "analysis_dom_ms": 26.799999998882413
+    },
+    {
+      "pair": 0,
+      "variant": "candidate",
+      "page_ready_ms": 298,
+      "analysis_dom_ms": 57.59999999962747
+    },
+    {
+      "pair": 1,
+      "variant": "candidate",
+      "page_ready_ms": 197.60000000149012,
+      "analysis_dom_ms": 30.299999998882413
+    },
+    {
+      "pair": 1,
+      "variant": "parent",
+      "page_ready_ms": 485.59999999962747,
+      "analysis_dom_ms": 48.70000000111759
+    },
+    {
+      "pair": 2,
+      "variant": "parent",
+      "page_ready_ms": 230.5,
+      "analysis_dom_ms": 34.69999999925494
+    },
+    {
+      "pair": 2,
+      "variant": "candidate",
+      "page_ready_ms": 282,
+      "analysis_dom_ms": 43.5
+    },
+    {
+      "pair": 3,
+      "variant": "candidate",
+      "page_ready_ms": 308,
+      "analysis_dom_ms": 53.899999998509884
+    },
+    {
+      "pair": 3,
+      "variant": "parent",
+      "page_ready_ms": 331,
+      "analysis_dom_ms": 37.70000000111759
+    },
+    {
+      "pair": 4,
+      "variant": "parent",
+      "page_ready_ms": 207.80000000074506,
+      "analysis_dom_ms": 45.19999999925494
+    },
+    {
+      "pair": 4,
+      "variant": "candidate",
+      "page_ready_ms": 284.3999999985099,
+      "analysis_dom_ms": 70.59999999962747
+    },
+    {
+      "pair": 5,
+      "variant": "candidate",
+      "page_ready_ms": 278.30000000074506,
+      "analysis_dom_ms": 54
+    },
+    {
+      "pair": 5,
+      "variant": "parent",
+      "page_ready_ms": 341.7999999988824,
+      "analysis_dom_ms": 34.40000000037253
+    },
+    {
+      "pair": 6,
+      "variant": "parent",
+      "page_ready_ms": 235.80000000074506,
+      "analysis_dom_ms": 45.09999999962747
+    },
+    {
+      "pair": 6,
+      "variant": "candidate",
+      "page_ready_ms": 339.7999999988824,
+      "analysis_dom_ms": 25.90000000037253
+    },
+    {
+      "pair": 7,
+      "variant": "candidate",
+      "page_ready_ms": 250.5,
+      "analysis_dom_ms": 33.80000000074506
+    },
+    {
+      "pair": 7,
+      "variant": "parent",
+      "page_ready_ms": 202.10000000149012,
+      "analysis_dom_ms": 51.5
+    },
+    {
+      "pair": 8,
+      "variant": "parent",
+      "page_ready_ms": 207.19999999925494,
+      "analysis_dom_ms": 21.299999998882413
+    },
+    {
+      "pair": 8,
+      "variant": "candidate",
+      "page_ready_ms": 241.80000000074506,
+      "analysis_dom_ms": 53
+    },
+    {
+      "pair": 9,
+      "variant": "candidate",
+      "page_ready_ms": 190.7999999988824,
+      "analysis_dom_ms": 18.100000001490116
+    },
+    {
+      "pair": 9,
+      "variant": "parent",
+      "page_ready_ms": 216.39999999850988,
+      "analysis_dom_ms": 16.800000000745058
+    }
+  ],
+  "summary": {
+    "parent": {
+      "page_ready_ms": {
+        "median": 233.15000000037253,
+        "minimum": 202.10000000149012,
+        "maximum": 485.59999999962747,
+        "stdev": 97.42319139817083
+      },
+      "analysis_dom_ms": {
+        "median": 36.200000000186265,
+        "minimum": 16.800000000745058,
+        "maximum": 51.5,
+        "stdev": 11.761594752213101
+      },
+      "asset_bytes": 16611
+    },
+    "candidate": {
+      "page_ready_ms": {
+        "median": 280.15000000037253,
+        "minimum": 190.7999999988824,
+        "maximum": 339.7999999988824,
+        "stdev": 47.290163411912374
+      },
+      "analysis_dom_ms": {
+        "median": 48.25,
+        "minimum": 18.100000001490116,
+        "maximum": 70.59999999962747,
+        "stdev": 16.539115251983027
+      },
+      "asset_bytes": 34149
+    }
+  },
+  "limits": "Local loopback, small fictional fixtures; not production latency, physical timing, or usefulness evidence."
+}

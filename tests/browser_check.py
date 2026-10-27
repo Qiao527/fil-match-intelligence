@@ -74,6 +74,34 @@ def main():
             page.goto(url)
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator(".card")).to_have_count(3)
+            initial = page.request.get(url + "/api/analyze?match=demo-1").json()
+            expect(page.locator("#pitch [data-event-id]")).to_have_count(
+                initial["report"]["shot_count"]
+            )
+            # Keyboard selection and source identity must agree across SVG and JSON.
+            marker = page.locator("#pitch [data-event-id]").first
+            marker_id = marker.get_attribute("data-event-id")
+            marker.focus()
+            marker.press("Enter")
+            expect(page.locator("#action-id")).to_have_text(marker_id)
+            page.get_by_role("button", name="Original JSON", exact=False).click()
+            expect(page.locator("#raw")).to_contain_text(marker_id)
+            page.get_by_role("button", name="Pitch workspace", exact=True).click()
+            page.get_by_role("button", name="View sequence", exact=False).first.click()
+            context = initial["report"]["review_cards"][0]["unit"]["context_event_ids"]
+            expect(page.locator("#action-strip button")).to_have_count(len(context))
+            expect(page.locator("#action-id")).to_have_text(context[0])
+            expect(page.get_by_role("button", name="Previous action", exact=True)).to_be_disabled()
+            page.get_by_role("button", name="Next action", exact=True).click()
+            expect(page.locator("#action-id")).to_have_text(context[1])
+            original = next(e for e in initial["events"] if e["id"] == context[1])
+            expect(page.locator("#action-coordinates")).to_contain_text(
+                str(original["location"][0]) + ", " + str(original["location"][1])
+            )
+            start, end = original["location"], original["pass"]["end_location"]
+            assert page.locator("#pitch .is-active path.mark").first.get_attribute("d") == (
+                f"M{start[0]} {start[1]}L{end[0]} {end[1]}"
+            )
             page.get_by_role("button", name="Inspect original actions").first.click()
             expect(page.locator("#raw")).to_contain_text("demo-1-action")
             page.get_by_role("button", name="Baseline & limits", exact=True).click()
@@ -85,6 +113,9 @@ def main():
             expect(page.locator("#fixture")).to_contain_text("Beacon City")
             page.locator("#period").select_option("2")
             expect(page.locator("#cards")).to_contain_text("No recorded Shots")
+            expect(page.locator("#pitch [data-event-id]")).to_have_count(0)
+            page.get_by_role("button", name="Passes", exact=True).click()
+            expect(page.locator("#pitch [data-event-id]")).not_to_have_count(0)
             page.locator("#match").select_option("demo-2")
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator(".card")).to_have_count(3)
@@ -118,10 +149,23 @@ def main():
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator("#result")).to_be_visible()
             expect(page.locator("#fixture")).to_contain_text("Atlas United")
+            page.locator("#team").select_option("901")
+            expect(page.locator("#scope")).to_contain_text("Atlas United")
+            expect(page.locator("#team-comparison")).to_contain_text(
+                "Excluded by current team filter"
+            )
+            assert page.locator("#pitch [data-event-id]").count() > 0
+            page.locator("#team").select_option("")
+            expect(page.locator("#team-comparison")).not_to_contain_text(
+                "Excluded by current team filter"
+            )
+            page.get_by_role("button", name="View sequence", exact=False).first.click()
             Path("artifacts").mkdir(exist_ok=True)
             page.screenshot(path="artifacts/desktop.png", full_page=True)
+            for width in [390, 768, 1024]:
+                page.set_viewport_size({"width": width, "height": 844})
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), width
             page.set_viewport_size({"width": 390, "height": 844})
-            assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
             page.screenshot(path="artifacts/mobile.png", full_page=True)
             assert page.request.get(url + "/api/analyze?match=8658").status == 400
             assert not errors, errors

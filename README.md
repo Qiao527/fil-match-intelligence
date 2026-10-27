@@ -9,7 +9,7 @@ Built by [Qiao527](https://github.com/Qiao527).
 
 **A full-stack football match review application where every observation leads back to evidence.**
 
-Select a fictional match → compute its report → inspect original actions → compare the baseline.
+Select a fictional match → explore shots and passes on the pitch → step through a sequence → inspect its original evidence.
 The public application runs a Python API and a responsive browser frontend. It requires no account,
 API key, dataset download, database or runtime third-party dependency.
 
@@ -28,6 +28,9 @@ This local server is for development; production uses Vercel's managed Python Fu
 
 ## What works
 
+- Interactive SVG pitch with shot locations, directed pass endpoints and source-order sequence stepping.
+- Click or keyboard-select an action to inspect its original coordinates and JSON.
+- Same-scale team comparisons, coordinate missingness and shared match/team/period filters.
 - Three self-authored fictional match inputs and reports computed on demand.
 - Team/period filters, cumulative shot-weight chart and complete comparison baseline.
 - Exact original action IDs and JSON drilldown; whole-sequence and comparison-action inspection.
@@ -53,7 +56,7 @@ This repository has a fresh public history; it is not a publication of the priva
 
 ```mermaid
 flowchart LR
-  UI[HTML / CSS / JavaScript] --> API[Python HTTP API]
+  UI[HTML / CSS / JavaScript + native SVG] --> API[Python HTTP API]
   API --> DEMO[Self-authored fictional actions]
   DEMO --> CHECK[Identity / order / score validation]
   CHECK --> ENGINE[Exact accounting + complete baseline]
@@ -109,3 +112,12 @@ protected datasets. No model-training or validated scientific-discovery achievem
 Code: [MIT](LICENSE). No provider dataset, credentials or private research artifacts are included.
 
 [Deployment guide](docs/DEPLOYMENT.md) · Production URL will be added only after live verification.
+
+## Spatial workspace
+
+See [the interaction guide, integrity contract and measured performance](docs/SPATIAL-WORKSPACE.md).
+The UI uses native SVG without adding a frontend framework or third-party runtime dependencies.
+
+```bash
+npm test  # three geometry/preservation checks using the built-in Node test runner
+```

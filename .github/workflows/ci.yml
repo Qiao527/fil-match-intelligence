@@ -18,7 +18,8 @@ jobs:
       - run: uv lock --check
       - run: uv sync --frozen
       - run: uv run --frozen ruff check .
-      - run: node --check public/app.js
+      - run: npm run build
+      - run: npm test
       - run: uv run --frozen pytest -q
       # ubuntu-24.04 already supplies Chromium's shared libraries. Installing
       # extra font packs via apt stalled the prior run for its entire 10-minute
