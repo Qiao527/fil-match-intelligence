@@ -62,3 +62,8 @@ no dependencies. The API accepts both original and rewritten function paths whil
 strict query validation. A regression checks that every public API destination has a declared
 function artifact; a browser regression verifies that catalog failure shows an unavailable
 state instead of leaving a loading label. Production verification remains a separate gate.
+
+Builder versions are pinned to Python 28.0.0 and static-build 24.0.0, whose declared
+peer dependency matches Vercel CLI 65.1.0: `@vercel/build-utils` 15.0.0. The first explicit
+build attempt used newer builders requiring 15.1.0 and failed dependency resolution; no
+force/legacy-peer-deps override was used.
