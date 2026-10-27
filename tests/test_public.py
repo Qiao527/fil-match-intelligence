@@ -115,3 +115,23 @@ def test_deployment_declares_every_public_api_and_accepts_rewritten_paths():
         assert response(canonical + query) == response(destination + query)
         assert response(destination + query)[0] == 200
     assert response("/api/unknown.py")[0] == 404
+
+
+def test_serverless_entrypoints_define_discoverable_handler_classes():
+    """Imported handler aliases were not discovered by the hosted Python builder."""
+    import ast
+    from http.server import BaseHTTPRequestHandler
+
+    for name in ["health", "matches", "analyze"]:
+        path = ROOT / f"api/{name}.py"
+        assert any(
+            isinstance(node, ast.ClassDef) and node.name == "handler"
+            for node in ast.parse(path.read_text()).body
+        )
+        sys.path.insert(0, str(ROOT))
+        try:
+            entrypoint = runpy.run_path(str(path))["handler"]
+        finally:
+            sys.path.pop(0)
+        assert issubclass(entrypoint, BaseHTTPRequestHandler)
+        assert callable(entrypoint.do_GET)
