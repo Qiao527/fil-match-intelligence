@@ -10,7 +10,7 @@ standard library; development dependencies are version-pinned and locked in `uv.
 ## Executed checks
 
 - Ruff: PASS.
-- Public regression suite: 14 tests pass. These are this repository's tests; the private research
+- Public regression suite: 15 tests pass. These are this repository's tests; the private research
   project's larger suite is not claimed as this public repository's coverage.
 - Fifteen fictional match/filter reports match frozen original-engine report hashes exactly.
 - Separate Fraction arithmetic checks reproduce source sums and all sequence complements.
@@ -77,3 +77,11 @@ updated to pytest 9.0.3. Lint, all 14 tests and the browser flow pass after the 
 advisory query for pytest 9.0.3 returned no matches. This is a scoped advisory check, not a complete
 security audit or a claim that no future vulnerability can exist. Production has no third-party
 Python runtime dependencies. The advisory is https://github.com/advisories/GHSA-6w46-j5rx-g56g.
+
+## Production catalog failure
+
+The owner independently observed a platform 404 at `/api/matches` after the static page loaded.
+This falsified any inference that a READY deployment meant the full product worked. Explicit
+static/function build declarations and three API rewrites were added, with rewritten-path
+regression coverage and a browser catalog-failure-state check. Local tests cannot certify
+production routing; anonymous production acceptance must still be recorded separately.

@@ -24,5 +24,39 @@
       ]
     }
   ],
-  "outputDirectory": "public"
+  "builds": [
+    {
+      "src": "api/health.py",
+      "use": "@vercel/python@29.0.0"
+    },
+    {
+      "src": "api/matches.py",
+      "use": "@vercel/python@29.0.0"
+    },
+    {
+      "src": "api/analyze.py",
+      "use": "@vercel/python@29.0.0"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build@25.0.0",
+      "config": {
+        "distDir": "public"
+      }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/health.py"
+    },
+    {
+      "source": "/api/matches",
+      "destination": "/api/matches.py"
+    },
+    {
+      "source": "/api/analyze",
+      "destination": "/api/analyze.py"
+    }
+  ]
 }

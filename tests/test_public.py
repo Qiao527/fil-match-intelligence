@@ -98,3 +98,20 @@ def test_public_extraction_matches_original_engine_on_all_fictional_selections()
             hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()
             == case["sha256"]
         )
+
+
+def test_deployment_declares_every_public_api_and_accepts_rewritten_paths():
+    """The production catalog was 404 despite a successful static deployment."""
+    import json
+
+    config = json.loads((ROOT / "vercel.json").read_text())
+    built = {b["src"] for b in config["builds"]}
+    rewrites = {r["source"]: r["destination"] for r in config["rewrites"]}
+    for name, query in [("health", ""), ("matches", ""), ("analyze", "?match=demo-1")]:
+        canonical = f"/api/{name}"
+        destination = rewrites[canonical]
+        assert destination.lstrip("/") in built
+        assert (ROOT / destination.lstrip("/")).is_file()
+        assert response(canonical + query) == response(destination + query)
+        assert response(destination + query)[0] == 200
+    assert response("/api/unknown.py")[0] == 404

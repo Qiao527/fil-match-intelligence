@@ -13,11 +13,15 @@ from fil.intelligence.engine import analyze  # noqa: E402
 
 def response(path):
     parsed = urlparse(path)
-    if parsed.path == "/api/health":
+    # Vercel rewrites can expose the function filename to the HTTP handler.
+    path = parsed.path
+    if path in {"/api/health.py", "/api/matches.py", "/api/analyze.py"}:
+        path = path.removesuffix(".py")
+    if path == "/api/health":
         return 200, {"status": "ok", "mode": "synthetic-only"}
-    if parsed.path == "/api/matches":
+    if path == "/api/matches":
         return 200, [{"id": k, "home": v[0], "away": v[1]} for k, v in MATCHES.items()]
-    if parsed.path != "/api/analyze":
+    if path != "/api/analyze":
         return 404, {"error": "Endpoint not found"}
     q = parse_qs(parsed.query, keep_blank_values=True)
     if set(q) - {"match", "period", "team"} or any(len(v) != 1 for v in q.values()):

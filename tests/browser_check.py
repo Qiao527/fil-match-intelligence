@@ -50,6 +50,13 @@ def main():
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
             errors = []
             page.on("pageerror", lambda e: errors.append(str(e)))
+            # A failed catalog must not leave a permanently loading dropdown.
+            page.route("**/api/matches", lambda route: route.fulfill(status=404, body="Not found"))
+            page.goto(url)
+            expect(page.locator("#status")).to_contain_text("Could not load matches")
+            expect(page.locator("#match")).to_contain_text("Matches unavailable")
+            expect(page.locator("#run")).to_be_disabled()
+            page.unroute("**/api/matches")
             health = page.request.get(url + "/api/health")
             assert health.status == 200
             assert health.json() == {"status": "ok", "mode": "synthetic-only"}
