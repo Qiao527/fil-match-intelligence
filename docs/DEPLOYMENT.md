@@ -24,7 +24,7 @@ locked, and the production application has no third-party Python dependencies. P
 access is public; Vercel Authentication remains enabled for previews.
 
 After import, the Git integration builds new pushes. The application CI also checks lint,
-JavaScript syntax, 15 regression tests and a real Chromium user journey, including a deliberately
+JavaScript syntax, 16 regression tests and a real Chromium user journey, including a deliberately
 delayed stale HTTP response. Green checks and deployed behavior are separate evidence.
 
 ## Acceptance after a deployment exists
@@ -67,3 +67,10 @@ Builder versions are pinned to Python 28.0.0 and static-build 24.0.0, whose decl
 peer dependency matches Vercel CLI 65.1.0: `@vercel/build-utils` 15.0.0. The first explicit
 build attempt used newer builders requiring 15.1.0 and failed dependency resolution; no
 force/legacy-peer-deps override was used.
+
+The next explicit build exposed `PYTHON_ENTRYPOINT_NOT_FOUND`: imported handler aliases
+were not discoverable by the builder. All three API files now define top-level handler
+subclasses with shared implementation. A regression checks discovery shape and callable
+HTTP methods. Deployment `dpl_8FkCvyif5n5UvY3SZQgVgnWFXbT5` at commit `0ec45bb`
+reached READY with those function builds. This does not substitute for anonymous endpoint
+and browser acceptance; direct production access from the managed executor remains blocked.

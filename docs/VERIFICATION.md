@@ -10,7 +10,7 @@ standard library; development dependencies are version-pinned and locked in `uv.
 ## Executed checks
 
 - Ruff: PASS.
-- Public regression suite: 15 tests pass. These are this repository's tests; the private research
+- Public regression suite: 16 tests pass. These are this repository's tests; the private research
   project's larger suite is not claimed as this public repository's coverage.
 - Fifteen fictional match/filter reports match frozen original-engine report hashes exactly.
 - Separate Fraction arithmetic checks reproduce source sums and all sequence complements.
