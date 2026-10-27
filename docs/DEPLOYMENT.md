@@ -13,6 +13,14 @@ project. There is no authenticated local CLI fallback. The repository owner ther
 live under `api/`. No environment variables, credentials, provider files, paid database or new
 model-training permission are required. Do not upload the private research checkout.
 
+The configuration explicitly selects **Other** (`framework: null`), overriding Python framework
+autodetection: this application serves static assets alongside individual Python API functions.
+The first import of commit `72461a2` failed before dependency installation because Vercel's
+uv 0.13.5 did not satisfy the project's exact uv 0.12.23 requirement. The supported tooling
+range now accepts both versions; CI still pins uv 0.12.23, development dependencies remain
+locked, and the production application has no third-party Python dependencies. Production
+access is public; Vercel Authentication remains enabled for previews.
+
 After import, the Git integration builds new pushes. The application CI also checks lint,
 JavaScript syntax, 14 regression tests and a real Chromium user journey, including a deliberately
 delayed stale HTTP response. Green checks and deployed behavior are separate evidence.
