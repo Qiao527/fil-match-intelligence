@@ -51,12 +51,29 @@ def main():
             page.locator("#match").select_option("demo-3")
             expect(page.locator("#result")).to_be_hidden()
             page.get_by_role("button", name="Run analysis").click()
-            expect(page.locator(".card")).to_have_count(3)
+            expect(page.locator("#result")).to_be_visible()
+            expect(page.locator("#fixture")).to_contain_text("Beacon City")
             page.locator("#period").select_option("2")
             expect(page.locator("#cards")).to_contain_text("No recorded Shots")
             page.locator("#match").select_option("demo-2")
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator(".card")).to_have_count(3)
+            # Hold a full-match response while the user changes filters. The latest
+            # request must complete without waiting for, or rendering, stale data.
+            held = []
+            page.route("**/api/analyze?match=demo-3", lambda route: held.append(route))
+            page.locator("#match").select_option("demo-3")
+            page.get_by_role("button", name="Run analysis").click()
+            expect(page.get_by_role("button", name="Run analysis")).to_be_disabled()
+            page.locator("#period").select_option("2")
+            expect(page.locator("#cards")).to_contain_text("No recorded Shots")
+            expect(page.locator("#scope")).to_contain_text("Second half")
+            assert held, "The stale full-match request must actually have been held"
+            page.unroute_all(behavior="ignoreErrors")
+            page.locator("#match").select_option("demo-2")
+            page.get_by_role("button", name="Run analysis").click()
+            expect(page.locator("#result")).to_be_visible()
+            expect(page.locator("#fixture")).to_contain_text("Atlas United")
             Path("artifacts").mkdir(exist_ok=True)
             page.screenshot(path="artifacts/desktop.png", full_page=True)
             page.set_viewport_size({"width": 390, "height": 844})
@@ -65,9 +82,7 @@ def main():
             assert page.request.get(url + "/api/analyze?match=8658").status == 400
             assert not errors, errors
             browser.close()
-        print(
-            "PASS: API, three fixtures, drilldown, baseline, stale state, empty state, mobile"
-        )
+        print("PASS: API, three fixtures, drilldown, baseline, stale state, empty state, mobile")
     finally:
         if server:
             server.terminate()

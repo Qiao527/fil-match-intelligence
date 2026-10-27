@@ -34,3 +34,12 @@ separately from local results. Browser automation is not human acceptance or a s
 
 New repository commits use author and committer `Qiao527` with GitHub's ID-based noreply address
 `233347586+Qiao527@users.noreply.github.com`. No old private commits are copied or rewritten.
+
+## Initial hosted regression and correction
+
+The first hosted run passed lint and all 14 API/engine tests, but its browser check
+exposed a real request/filter race: changing selection before the first response could
+leave a report inconsistent with the visible filter. The client now tracks whether
+analysis has started independently of whether response data exists. A browser regression
+holds the stale full-match request and verifies the newer filtered request completes
+with the no-Shot result. Failed initial CI is retained in Git history.
