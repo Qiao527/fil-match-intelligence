@@ -4,6 +4,9 @@
 
 Built by [Qiao527](https://github.com/Qiao527).
 
+[Production application](https://fil-match-intelligence.vercel.app) ·
+[90-second demo](docs/DEMO.md) · [Verification scope](docs/VERIFICATION.md)
+
 **A full-stack football match review application where every observation leads back to evidence.**
 
 Select a fictional match → compute its report → inspect original actions → compare the baseline.

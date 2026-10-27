@@ -22,7 +22,25 @@ standard library; development dependencies are version-pinned and locked in `uv.
 The public engine deliberately shares measurement semantics with the original prototype but does
 not distribute its research corpus or historical Git branches. Public Git history starts here.
 
-## Limits
+## Production acceptance status — 2026-10-27
+
+Vercel production deployment `dpl_HwosNWmab62QceMQEwmmrkDuwhwn` reached **READY** for
+commit `a3196039ec2ebdfba8d8259f625fd4e6ca7b9e26`, with the production alias
+https://fil-match-intelligence.vercel.app. The application CI passed for that exact commit:
+https://github.com/Qiao527/fil-match-intelligence/actions/runs/40537787858.
+
+This is build evidence, **not completed online acceptance**. The managed execution environment
+denies outbound access to the production hostname, and the Vercel authenticated-fetch tool lacks
+its protection-bypass permission. No bypass was attempted. Anonymous API/browser verification
+therefore remains pending the environment administrator's hostname allowlist update. Preview
+authentication stays enabled; production authentication is disabled by project configuration.
+
+The browser checker now compares 15 actual HTTP reports against the retained original-engine
+hashes as well as checking health, catalog and the user journey. The same checker can be run
+against the production URL once network access is permitted; local results are not represented
+as production results.
+
+## Scientific and measurement limits
 
 No human usefulness evaluation, independent football confirmation, ratings, model fitting or
 superior-to-human discovery. Fictional shot weights are illustrative, not calibrated xG.

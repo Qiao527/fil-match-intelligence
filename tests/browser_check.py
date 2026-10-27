@@ -1,12 +1,15 @@
 """Live browser acceptance for the synthetic-only application."""
 
 import argparse
+import hashlib
+import json
 import os
 import subprocess
 import sys
 import time
 import urllib.request
 from pathlib import Path
+from urllib.parse import urlencode
 
 from playwright.sync_api import expect, sync_playwright
 
@@ -18,7 +21,7 @@ def main():
     parser.add_argument("--url")
     args = parser.parse_args()
     server = None
-    url = args.url or "http://127.0.0.1:8652"
+    url = (args.url or "http://127.0.0.1:8652").rstrip("/")
     if not url.startswith(("https://", "http://127.0.0.1:")):
         parser.error("HTTPS or local loopback required")
     try:
@@ -37,10 +40,30 @@ def main():
                 raise RuntimeError("Local service did not start")
         with sync_playwright() as p:
             executable = os.environ.get("FIL_CHROMIUM_PATH")
-            browser = p.chromium.launch(**({"executable_path": executable} if executable else {}))
+            launch = {"executable_path": executable} if executable else {}
+            # Preserve managed outbound policy for hosted acceptance. Local checks
+            # remain loopback-only; never bypass the configured network proxy.
+            proxy = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+            if args.url and proxy:
+                launch["proxy"] = {"server": proxy}
+            browser = p.chromium.launch(**launch)
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
             errors = []
             page.on("pageerror", lambda e: errors.append(str(e)))
+            health = page.request.get(url + "/api/health")
+            assert health.status == 200
+            assert health.json() == {"status": "ok", "mode": "synthetic-only"}
+            catalog = page.request.get(url + "/api/matches")
+            assert catalog.status == 200
+            assert {m["id"] for m in catalog.json()} == {"demo-1", "demo-2", "demo-3"}
+            reference = json.loads((ROOT / "tests/fixtures/engine-reference.json").read_text())
+            for case in reference["cases"]:
+                query = urlencode({"match": case["match"], **case["selection"]})
+                result = page.request.get(url + "/api/analyze?" + query)
+                assert result.status == 200, query
+                report = result.json()["report"]
+                digest = hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()
+                assert digest == case["sha256"], query
             page.goto(url)
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator(".card")).to_have_count(3)
@@ -96,7 +119,8 @@ def main():
             assert page.request.get(url + "/api/analyze?match=8658").status == 400
             assert not errors, errors
             browser.close()
-        print("PASS: API, three fixtures, drilldown, baseline, stale state, empty state, mobile")
+        print("PASS: health, catalog, 15 HTTP report hashes, three fixtures, drilldown,")
+        print("baseline, stale state, empty state, mobile; zero JavaScript page errors")
     finally:
         if server:
             server.terminate()
