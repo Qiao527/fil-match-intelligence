@@ -1,0 +1,105 @@
+{
+  "reference_commit": "b1e08e0d57b4f123e3de3c34e394304dc28861fb",
+  "scope": "Fictional fixtures only; no real provider records",
+  "cases": [
+    {
+      "match": "demo-1",
+      "selection": {},
+      "sha256": "f607a1edeb4df58526c5f99fe9e17d6e69ccd9779d9fe6e37911a137a8167f31"
+    },
+    {
+      "match": "demo-1",
+      "selection": {
+        "period": 1
+      },
+      "sha256": "424caa3dfb99afed9d6b7501597009a379627d96cce384f0c287724631b45ac9"
+    },
+    {
+      "match": "demo-1",
+      "selection": {
+        "period": 2
+      },
+      "sha256": "ed1cc951e188a9db8662c97580474d1d76f7d774696cb2cbddb6a7f00134951d"
+    },
+    {
+      "match": "demo-1",
+      "selection": {
+        "team": 901
+      },
+      "sha256": "fd14a5d0bd73e9a1970e0c39f462432ceddb9c8f69954b1d4a7cf4d8b7a7d0e7"
+    },
+    {
+      "match": "demo-1",
+      "selection": {
+        "team": 902
+      },
+      "sha256": "eb32025cf9e62a653c0388864b030a7d3a21aa8672e03ddfbaef57399078f573"
+    },
+    {
+      "match": "demo-2",
+      "selection": {},
+      "sha256": "ef8a4f3145885b8693d1c18bd047354f7d48156598f96b581427bc41836de226"
+    },
+    {
+      "match": "demo-2",
+      "selection": {
+        "period": 1
+      },
+      "sha256": "57772281da6484a34c72c5ce879136aac93221f4856ba987ae4ef12fdd87c25a"
+    },
+    {
+      "match": "demo-2",
+      "selection": {
+        "period": 2
+      },
+      "sha256": "2fd4ab085f410055ef13411deb90c93570f1ba1fe018c82960b07bc75dcfa3b9"
+    },
+    {
+      "match": "demo-2",
+      "selection": {
+        "team": 901
+      },
+      "sha256": "76594cd0979bc0a8983c02d6b357eaf7748e06ec05859f474636a75237b04f9a"
+    },
+    {
+      "match": "demo-2",
+      "selection": {
+        "team": 902
+      },
+      "sha256": "08b5f1822cb21d4b0c95c99030621df987c0edd92aed04296a08bd23baf9a372"
+    },
+    {
+      "match": "demo-3",
+      "selection": {},
+      "sha256": "d0f251391280d3aa35ad981b4d4124d47694a1fd5aab3f2e5dc65aa25e31e873"
+    },
+    {
+      "match": "demo-3",
+      "selection": {
+        "period": 1
+      },
+      "sha256": "bfddab526611822036ff636782181ae6ea14030229f9d0837713228b50040095"
+    },
+    {
+      "match": "demo-3",
+      "selection": {
+        "period": 2
+      },
+      "sha256": "7d3e0c6c46a16625f49ebd2bd4ba2c5562e8698a001838796a9187182c1e7f5b"
+    },
+    {
+      "match": "demo-3",
+      "selection": {
+        "team": 901
+      },
+      "sha256": "3a6e2478a57575381b301d9d96bec9d13247634145ef0aba73059aca09be93fa"
+    },
+    {
+      "match": "demo-3",
+      "selection": {
+        "team": 902
+      },
+      "sha256": "ddf67fa14d8199184f821f285b73c9534f85427d1df24403a6ff6990722d29ca"
+    }
+  ]
+}

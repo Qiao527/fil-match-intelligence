@@ -1,0 +1,19 @@
+name: Public application checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca
+        with:
+          version: "0.12.23"
+      - run: uv python install 3.12
+      - run: uv lock --check
+      - run: uv sync --frozen
+      - run: uv run --frozen ruff check .
+      - run: uv run --frozen pytest -q
+      - run: uv run --frozen python -m playwright install --with-deps chromium
+      - run: uv run --frozen python tests/browser_check.py
