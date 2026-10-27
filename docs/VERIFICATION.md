@@ -43,3 +43,12 @@ leave a report inconsistent with the visible filter. The client now tracks wheth
 analysis has started independently of whether response data exists. A browser regression
 holds the stale full-match request and verifies the newer filtered request completes
 with the no-Shot result. Failed initial CI is retained in Git history.
+
+## Development dependency advisory
+
+The public GitHub Advisory Database identifies `GHSA-6w46-j5rx-g56g` (pytest temporary-directory
+handling) in pytest versions below 9.0.3. Both the pinned development declaration and lockfile were
+updated to pytest 9.0.3. Lint, all 14 tests and the browser flow pass after the update. A fresh public
+advisory query for pytest 9.0.3 returned no matches. This is a scoped advisory check, not a complete
+security audit or a claim that no future vulnerability can exist. Production has no third-party
+Python runtime dependencies. The advisory is https://github.com/advisories/GHSA-6w46-j5rx-g56g.
