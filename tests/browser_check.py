@@ -58,18 +58,32 @@ def main():
             page.locator("#match").select_option("demo-2")
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator(".card")).to_have_count(3)
-            # Hold a full-match response while the user changes filters. The latest
-            # request must complete without waiting for, or rendering, stale data.
-            held = []
-            page.route("**/api/analyze?match=demo-3", lambda route: held.append(route))
+            # Hold a completed HTTP response in the browser, then release it after
+            # a newer filtered response. This tests stale-response rejection without
+            # leaving unfinished Playwright routing tasks at browser shutdown.
+            page.evaluate("""() => {
+              window.__originalFetch = window.fetch;
+              window.fetch = async (...args) => {
+                const res = await window.__originalFetch(...args);
+                if (String(args[0]) === '/api/analyze?match=demo-3') {
+                  const body = await res.arrayBuffer();
+                  await new Promise(resolve => { window.__releaseStale = resolve; });
+                  return new Response(body, {status: res.status, headers: res.headers});
+                }
+                return res;
+              };
+            }""")
             page.locator("#match").select_option("demo-3")
             page.get_by_role("button", name="Run analysis").click()
-            expect(page.get_by_role("button", name="Run analysis")).to_be_disabled()
+            page.wait_for_function("typeof window.__releaseStale === 'function'")
             page.locator("#period").select_option("2")
             expect(page.locator("#cards")).to_contain_text("No recorded Shots")
             expect(page.locator("#scope")).to_contain_text("Second half")
-            assert held, "The stale full-match request must actually have been held"
-            page.unroute_all(behavior="ignoreErrors")
+            page.evaluate("() => {window.__releaseStale(); window.fetch = window.__originalFetch;}")
+            page.evaluate(
+                "() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))"
+            )
+            expect(page.locator("#cards")).to_contain_text("No recorded Shots")
             page.locator("#match").select_option("demo-2")
             page.get_by_role("button", name="Run analysis").click()
             expect(page.locator("#result")).to_be_visible()
