@@ -1,5 +1,9 @@
 # FIL · Match Intelligence
 
+[![Public application checks](https://github.com/Qiao527/fil-match-intelligence/actions/workflows/ci.yml/badge.svg)](https://github.com/Qiao527/fil-match-intelligence/actions/workflows/ci.yml)
+
+Built by [Qiao527](https://github.com/Qiao527).
+
 **A full-stack football match review application where every observation leads back to evidence.**
 
 Select a fictional match → compute its report → inspect original actions → compare the baseline.
@@ -100,3 +104,5 @@ coverage. Extracted a minimal public runtime from a larger research prototype wi
 protected datasets. No model-training or validated scientific-discovery achievement is claimed.
 
 Code: [MIT](LICENSE). No provider dataset, credentials or private research artifacts are included.
+
+[Deployment guide](docs/DEPLOYMENT.md) · Production URL will be added only after live verification.
